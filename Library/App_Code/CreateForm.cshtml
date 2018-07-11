@@ -120,7 +120,10 @@
         <div class="w-30 text-right">
             <label class="padding-right-10" for="DateOfBirth" runat="server" Text="">Авторы</label>
         </div>
-        <div class="w-50" >
+        @if (book?.Authors == null)
+        {
+        <div class="w-70">
+
             <select @((AuthorsError != null) ? "class=error" : "") name="Authors" id="Authors" )>
                 <option hidden value=""></option>
                 @foreach (AuthorModel a in authors)
@@ -135,14 +138,21 @@
                     }
                 }
             </select>
-            @if (book?.Authors != null)
+        </div>
+        }
+        else
+        {
+        <div class="w-50">
+            @if (book?.Authors?.Any() == true)
             {
-                    foreach (AuthorModel bookAuthor in book.Authors)
-                    {
-                        <p>@bookAuthor.Name <a href="/Book/RemoveBookAuthor/@bookAuthor.Id,@book.Id">Удалить</a></p>
-                    }
+                foreach (AuthorModel bookAuthor in book.Authors)
+                {
+                    <p>@bookAuthor.Name <a href="/Book/RemoveBookAuthor/@bookAuthor.Id,@book.Id">Удалить</a></p>
+                }
             }
         </div>
+        }
+        
         @if (book?.Authors != null)
         {
         <div class="w-20">
