@@ -290,7 +290,7 @@ body {
     -webkit-justify-content: space-between;
     justify-content: space-between;
 }
-.btn-edit, .btn-delete, .btn-create {
+.btn-edit, .btn-delete, .btn-create, btn-add-author {
     font-family: Montserrat-Light, sans-serif;
     font-size: 0.875rem;
     margin: 5px 5px;
@@ -307,7 +307,6 @@ body {
 .btn-create:hover {
     background-color: #5567ff;
     color: #FFFFFF;
-    border: 1px solid #5567ff;
 }
 .btn-edit {
     border: #7d35d9 solid 1px;
@@ -330,7 +329,19 @@ body {
     margin: 0.375rem;
     text-align: center;
 }
-
+.btn-add-author {
+    color: #6c55ff;
+    border: 1px solid #6c55ff;
+    display: block;
+    text-align: center;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    text-decoration: none;
+}
+.btn-add-author:hover {
+    background-color: #6c55ff;
+    color: #FFFFFF;
+}
 /* =============== ======= =============== */
 /* =============== footer =============== */
 .footer {

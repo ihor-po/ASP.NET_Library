@@ -251,15 +251,41 @@ namespace Library.Controllers
 
             if (book.Authors.ToList().Find(item => item.Name == Authors) == null)
             {
-                IEnumerable<AuthorModel> tmp = new List<AuthorModel> { atr};
-                //book.Authors.ToList().Add(atr);
-                book.Authors.Concat(tmp);
+                List<AuthorModel> tmp = new List<AuthorModel>();
+
+                foreach(AuthorModel a in book.Authors)
+                {
+                    tmp.Add(a);
+                }
+                tmp.Add(atr);
+
+                book.Authors = tmp;
             }
             else
             {
                 ViewBag.AuthorsError = "Автор уже добавлен";
                 return View("AddAuthor");
             }
+
+            return RedirectToAction("EditBook", new { id = book.Id });
+        }
+
+        //Get: Add author to book
+        [HttpGet]
+        public ActionResult RemoveBookAuthor(string id)
+        {
+            string[] substring = id.Split(',');
+
+            AuthorModel atr = aRepo.GetOne(Convert.ToInt16(substring[0]));
+            BookModel book = bRepo.GetOne(Convert.ToInt16(substring[1]));
+            
+
+            ViewBag.Title = "Library :: Книги";
+            ViewBag.Caption = "Добавить автора книги";
+            ViewBag.Book = book.Id;
+            ViewBag.Authors = aRepo.GetAll();
+
+            book.Authors = book.Authors.Where(item => item != atr);
 
             return RedirectToAction("EditBook", new { id = book.Id });
         }

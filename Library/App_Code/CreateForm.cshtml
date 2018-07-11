@@ -137,9 +137,9 @@
             </select>
             @if (book?.Authors != null)
             {
-                    foreach (AuthorModel bookAutor in book.Authors)
+                    foreach (AuthorModel bookAuthor in book.Authors)
                     {
-                        <p>@bookAutor.Name <a href="#">Удалить</a></p>
+                        <p>@bookAuthor.Name <a href="/Book/RemoveBookAuthor/@bookAuthor.Id,@book.Id">Удалить</a></p>
                     }
             }
         </div>
