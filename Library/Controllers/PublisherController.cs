@@ -96,7 +96,7 @@ namespace Library.Controllers
                 return View("PublisherForm");
             }
 
-            BookModel book = bRepo.GetAll().ToList().Find(_book => _book.Publisher.Name == publisher.Name);
+            BookModel book = bRepo.GetAll().ToList().Find(_book => _book.Publisher?.Name == publisher.Name);
 
             if (book != null)
             {

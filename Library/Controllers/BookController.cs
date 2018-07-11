@@ -156,17 +156,20 @@ namespace Library.Controllers
                 ViewBag.PublisherError = "Издатель ны выбран!";
             }
 
-            AuthorModel aModel = aRepo.GetAll().ToList().Find(_author => _author.Name == req["Authors"]);
+            if (book.Authors.Count() == 1)
+            {
+                AuthorModel aModel = aRepo.GetAll().ToList().Find(_author => _author.Name == req["Authors"]);
 
-            if (aModel == null)
-            {
-                ViewBag.AuthorsError = "Автор ны выбран!";
-            }
-            else
-            {
-                List<AuthorModel> atrs = new List<AuthorModel>();
-                atrs.Add(aModel);
-                book.Authors = atrs;
+                if (aModel == null)
+                {
+                    ViewBag.AuthorsError = "Автор ны выбран!";
+                }
+                else
+                {
+                    List<AuthorModel> atrs = new List<AuthorModel>();
+                    atrs.Add(aModel);
+                    book.Authors = atrs;
+                }
             }
 
             try
