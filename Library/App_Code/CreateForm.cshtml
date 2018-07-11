@@ -1,0 +1,202 @@
+﻿@using Library.Models;
+@model Library.Models.PublisherModel;
+
+@helper FormForPublisher(PublisherModel publisher, string pNameError)
+{
+    <div class="fields__item">
+        <div class="w-30 text-right">
+            <label class="padding-right-10" for="Name" runat="server" Text="">Издатель</label>
+        </div>
+        <div class="w-70">
+            <input @((pNameError != null) ? "class=error" : "") type="text" name="Name" placeholder="Издатель" value="@((publisher != null) ? publisher.Name : "")">
+        </div>
+    </div>
+    if (@pNameError != null)
+    {
+        <div class="text-error">@pNameError</div>
+    }
+}
+
+
+@helper FormForAuthor(AuthorModel author, string NameError, string BirthDayError, string DeathError)
+{
+    /**/
+    <div class="fields__item">
+        <div class="w-30 text-right">
+            <label class="padding-right-10" for="Name" runat="server" Text="">Автор</label>
+        </div>
+        <div class="w-70">
+            <input @((NameError != null) ? "class=error" : "") type="text" name="Name" id="Name" placeholder="Имя автора" value="@((author != null) ? author.Name : "")">
+        </div>
+    </div>
+    if (@NameError != null)
+    {
+        <div class="text-error">@NameError</div>
+    }
+    <div class="fields__item">
+        <div class="w-30 text-right">
+            <label class="padding-right-10" for="DateOfBirth" runat="server" Text="">Дата рождения</label>
+        </div>
+        <div class="w-70">
+            <input @((BirthDayError != null) ? "class=error" : "")
+                   type="text" id="DateOfBirth"
+                   name="DateOfBirth"
+                   placeholder="ГГГГ-ММ-ДД"
+                   value="@((author != null) ? author.DateOfBirth.ToString("yyyyMMdd") : " ")">
+        </div>
+    </div>
+    if (@BirthDayError != null)
+    {
+        <div class="text-error">@BirthDayError</div>
+    }
+    <div class="fields__item">
+        <div class="w-30 text-right">
+            <label class="padding-right-10" for="DateOfDeath" runat="server" Text="">Дата рождения</label>
+        </div>
+        <div class="w-70">
+            <input @((DeathError != null) ? "class=error" : "")
+                   type="text" id="DateOfDeath"
+                   name="DateOfDeath"
+                   placeholder="ГГГГ-ММ-ДД"
+                   value="@((author != null) ? author.DateOfDeath.ToString("yyyyMMdd") : " ")">
+            <script>
+                jQuery(function ($) {
+                    $("#DateOfBirth").mask("9999-99-99", { placeholder: " " });
+                    $("#DateOfDeath").mask("9999-99-99", { placeholder: " " });
+                });
+            </script>
+        </div>
+    </div>
+    if (@DeathError != null)
+    {
+        <div class="text-error">@DeathError</div>
+    }
+}
+
+@helper FormForBook(BookModel book, IEnumerable<PublisherModel> publishers, IEnumerable<AuthorModel> authors,
+    string NameError, string PublisherError, string AuthorsError, string PublDateError, string PageCountError, string IsbnError)
+{
+    <div class="fields__item">
+        <div class="w-30 text-right">
+            <label class="padding-right-10" for="Name" runat="server" Text="">Название</label>
+        </div>
+        <div class="w-70">
+            <input @((NameError != null) ? "class=error" : "") type="text" name="Name" id="Name" placeholder="Название" value="@((book != null) ? book.Name : "")">
+        </div>
+    </div>
+    if (@NameError != null)
+    {
+        <div class="text-error">@NameError</div>
+    }
+    <div class="fields__item">
+        <div class="w-30 text-right">
+            <label class="padding-right-10" for="Publisher" runat="server" Text="">Издатель</label>
+        </div>
+        <div class="w-70">
+            <select @((PublisherError != null) ? "class=error" : "") name="Publisher" id="Publisher" )>
+                <option hidden value=""></option>
+                @if (publishers?.Any() == true)
+                {
+                    foreach (PublisherModel p in publishers)
+                    {
+                        if (book != null)
+                        {
+                            <option value="@p.Name" @((p.Name == book?.Publisher?.Name) ? "selected" : "")>@p.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@p.Name">@p.Name</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    if (@PublisherError != null)
+    {
+        <div class="text-error">@PublisherError</div>
+    }
+    <div class="fields__item">
+        <div class="w-30 text-right">
+            <label class="padding-right-10" for="DateOfBirth" runat="server" Text="">Авторы</label>
+        </div>
+        <div class="w-50" >
+            <select @((AuthorsError != null) ? "class=error" : "") name="Authors" id="Authors" )>
+                <option hidden value=""></option>
+                @foreach (AuthorModel a in authors)
+                {
+                    if (book != null)
+                    {
+                        <option value="@a.Name" @((book?.Authors?.ToList().Find(item => item.Name == a.Name) != null) ? "selected" : "")>@a.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@a.Name">@a.Name</option>
+                    }
+                }
+            </select>
+            @if (book?.Authors != null)
+            {
+                    foreach (AuthorModel bookAutor in book.Authors)
+                    {
+                        <p>@bookAutor.Name <a href="#">Удалить</a></p>
+                    }
+            }
+        </div>
+        @if (book?.Authors != null)
+        {
+        <div class="w-20">
+            <a class="btn-add-author" href="/Book/AddBookAuthor/@book.Id">Добавить автора</a>
+        </div>
+        }
+    </div>
+    if (@AuthorsError != null)
+    {
+        <div class="text-error">@AuthorsError</div>
+    }
+    <div class="fields__item">
+        <div class="w-30 text-right">
+            <label class="padding-right-10" for="PublishDate" runat="server" Text="">Дата публикации</label>
+        </div>
+        <div class="w-70">
+            <input @((PublDateError != null) ? "class=error" : "")
+                   type="text" id="PublishDate"
+                   name="PublishDate"
+                   placeholder="ГГГГ-ММ-ДД"
+                   value="@((book != null) ? book.PublishDate.ToString("yyyyMMdd") : " ")">
+            <script>
+                jQuery(function ($) {
+                    $("#PublishDate").mask("9999-99-99", { placeholder: " " });
+                });
+            </script>
+        </div>
+    </div>
+    if (@PublDateError != null)
+    {
+        <div class="text-error">@PublDateError</div>
+    }
+    <div class="fields__item">
+        <div class="w-30 text-right">
+            <label class="padding-right-10" for="PageCount" runat="server" Text="">Количество страниц</label>
+        </div>
+        <div class="w-70">
+            <input @((PageCountError != null) ? "class=error" : "") type="number" name="PageCount" id="PageCount" value="@((book != null) ? book.PageCount.ToString() : "")">
+        </div>
+    </div>
+    if (@PageCountError != null)
+    {
+        <div class="text-error">@PageCountError</div>
+    }
+    <div class="fields__item">
+        <div class="w-30 text-right">
+            <label class="padding-right-10" for="Name" runat="server" Text="">ISBN</label>
+        </div>
+        <div class="w-70">
+            <input @((IsbnError != null) ? "class=error" : "") type="text" name="ISBN" id="ISBN" placeholder="ISBN" value="@((book != null) ? book.ISBN : "")">
+        </div>
+    </div>
+    if (@IsbnError != null)
+    {
+        <div class="text-error">@IsbnError</div>
+    }
+}

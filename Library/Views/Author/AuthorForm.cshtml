@@ -1,0 +1,46 @@
+﻿@using Library.Models;
+@{
+    Layout = null;
+    string title = ViewBag.Title;
+    string caption = ViewBag.Caption;
+    string NameError = ViewBag?.NameError;
+    string BirthDayError = ViewBag?.BirthDayError;
+    string DeathError = ViewBag?.DeathError;
+    AuthorModel author = ViewBag?.Author;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@title</title>
+    <link href="~/Content/Common/css/reset.css" rel="stylesheet" />
+    <link href="~/Content/Common/css/main.css" rel="stylesheet" />
+    <script src='@Url.Content("~/Scripts/jquery-3.3.1.min.js")' type="text/javascript"></script>
+    <script src='@Url.Content("~/Scripts/jquery-ui-1.12.1.min.js")' type="text/javascript"></script>
+    <script src='@Url.Content("~/Scripts/jquery.maskedinput.min.js")' type="text/javascript"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="central-part central-part--column central-part--justify-center">
+            <div class="header-menu">
+                @Html.ActionLink("Главная", "Index", "Home", null, new { @class = "header-menu__item" })
+                @Html.ActionLink("Издатели", "Index", "Publisher", null, new { @class = "header-menu__item" })
+                @Html.ActionLink("Авторы", "Index", "Author", null, new { @class = "header-menu__item" })
+                @Html.ActionLink("Книги", "Index", "Book", null, new { @class = "header-menu__item" })
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <form id="CreateAuthorForm" style="align-self:center;" method="post">
+            <div class="fields author-fields">
+                <h2>@caption</h2>
+                @CreateForm.FormForAuthor(author, NameError, BirthDayError, DeathError)
+                <button type="submit">@((author != null && author?.Id != null) ? "Редактировать" : "Создать")</button>
+            </div>
+        </form>
+    </main>
+    <footer class="footer"></footer>
+</body>
+</html>

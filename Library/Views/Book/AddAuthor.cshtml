@@ -1,0 +1,59 @@
+﻿@using Library.Models;
+@{
+    Layout = null;
+    string title = ViewBag.Title;
+    string caption = ViewBag.Caption;
+    string AuthorsError = ViewBag?.AuthorsError;
+    BookModel book = ViewBag?.Book ?? null;
+    IEnumerable<AuthorModel> authors = ViewBag?.Authors;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@title</title>
+    <link href="~/Content/Common/css/reset.css" rel="stylesheet" />
+    <link href="~/Content/Common/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="header">
+        <div class="central-part central-part--column central-part--justify-center">
+            <div class="header-menu">
+                @Html.ActionLink("Главная", "Index", "Home", null, new { @class = "header-menu__item" })
+                @Html.ActionLink("Издатели", "Index", "Publisher", null, new { @class = "header-menu__item" })
+                @Html.ActionLink("Авторы", "Index", "Author", null, new { @class = "header-menu__item" })
+                @Html.ActionLink("Книги", "Index", "Book", null, new { @class = "header-menu__item" })
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <form id="AddAuthor" style="align-self:center;" method="post">
+            <div class="fields h-12">
+                <h2>@caption</h2>
+                <div class="fields__item">
+                    <div class="w-30 text-right">
+                        <label class="padding-right-10" for="Authors" runat="server" Text="">Автор</label>
+                    </div>
+                    <div class="w-70">
+                        <select @((AuthorsError != null) ? "class=error" : "") name="Authors" id="Authors" )>
+                            <option hidden value=""></option>
+                            @foreach (AuthorModel a in authors)
+                            {
+                                <option value="@a.Name">@a.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                @if (AuthorsError != null)
+                {
+                <div class="text-error">@AuthorsError</div>
+                }
+                <button type="submit">Добавить</button>
+            </div>
+        </form>
+    </main>
+    <footer class="footer"></footer>
+</body>
+</html>

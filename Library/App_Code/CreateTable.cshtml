@@ -1,0 +1,135 @@
+﻿@using Library.Models;
+
+@helper HtmlPublisherTable(IEnumerable<PublisherModel> collection, Dictionary<string, string> lang, string caption)
+{
+    <table class="userTable">
+        <caption>
+            <h3>@caption</h3>
+            <div class="caption__add-button">
+                <a class="btn-create" href="/Publisher/CreatePublisher">Добавить издателя</a>
+            </div>
+        </caption>
+        <thead>
+            <tr>
+                @foreach (var propInfo in typeof(PublisherModel).GetProperties())
+                {
+                    <th @((propInfo.Name == "Id") ? "class=w-5" : "class=w-80")>@(lang.ContainsKey(propInfo.Name) ? lang[propInfo.Name] : propInfo.Name)</th>
+                }
+                <th class="w-auto">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (collection?.Any() == true)
+            {
+                foreach (var publisher in collection)
+                {
+                    <tr>
+                        @foreach (var propInfo in typeof(PublisherModel).GetProperties())
+                        {
+                            <td>@propInfo.GetValue(publisher)</td>
+                        }
+                        <td class="td-inline w-auto">
+                            <a class="btn-edit" href="/Publisher/EditPublisher/@publisher.Id">Изменить</a>
+                            <a class="btn-delete" href="/Publisher/DeletePublisher/@publisher.Id">Удалить</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+@helper HtmlAuthorsTable(IEnumerable<AuthorModel> collection, Dictionary<string, string> lang, string caption)
+{
+    <table class="userTable">
+        <caption>
+            <h3>@caption</h3>
+            <div class="caption__add-button">
+                <a class="btn-create" href="/Author/CreateAuthor">Добавить автора</a>
+            </div>
+        </caption>
+        <thead>
+            <tr>
+                @foreach (var propInfo in typeof(AuthorModel).GetProperties())
+                {
+                    <th @((propInfo.Name == "Id") ? "class=w-5" : "w-30")>@(lang.ContainsKey(propInfo.Name) ? lang[propInfo.Name] : propInfo.Name)</th>
+                }
+                <th class="w-auto">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (collection?.Any() == true)
+            {
+                foreach (var author in collection)
+                {
+                    <tr>
+                        <td>@author.Id</td>
+                        <td>@author.Name</td>
+                        <td>@author.DateOfBirth.Date.ToString("d")</td>
+                        <td>@author.DateOfDeath.Date.ToString("d")</td>
+                        <td class="td-inline w-auto">
+                            <a class="btn-edit" href="/Author/EditAuthor/@author.Id">Изменить</a>
+                            <a class="btn-delete" href="/Author/DeleteAuthor/@author.Id">Удалить</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+@helper HtmlBooksTable(IEnumerable<BookModel> collection, Dictionary<string, string> lang, string caption)
+{
+    <table class="userTable">
+        <caption>
+            <h3>@caption</h3>
+            <div class="caption__add-button">
+                <a class="btn-create" href="/Book/CreateBook">Добавить книгу</a>
+            </div>
+        </caption>
+        <thead>
+            <tr>
+                @foreach (var propInfo in typeof(BookModel).GetProperties())
+            {
+                <th @((propInfo.Name == "Id") ? "class=w-5" : "w-30")>@(lang.ContainsKey(propInfo.Name) ? lang[propInfo.Name] : propInfo.Name)</th>
+            }
+                <th class="w-auto">Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (collection?.Any() == true)
+        {
+            foreach (var book in collection)
+            {
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Name</td>
+                <td>
+                    @if (book?.Publisher != null)
+                    {
+                        @book.Publisher.Name
+                    }
+                </td>
+                <td>
+                    @if (book.Authors?.Any() == true)
+                    {
+                        foreach (AuthorModel autor in book.Authors)
+                        {
+                            <p>@autor.Name</p>
+                        }
+                    }
+
+                </td>
+                <td>@book.PublishDate.Date.ToString("d")</td>
+                <td>@book.PageCount</td>
+                <td>@book.ISBN</td>
+                <td>
+                    <a class="btn-edit btn-block" href="/Book/EditBook/@book.Id">Изменить</a>
+                    <a class="btn-delete btn-block" href="/Book/DeleteBook/@book.Id">Удалить</a>
+                </td>
+            </tr>
+            }
+        }
+        </tbody>
+    </table>
+}

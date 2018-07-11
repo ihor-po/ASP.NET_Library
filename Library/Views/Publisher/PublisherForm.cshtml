@@ -1,0 +1,42 @@
+﻿@using Library.Models;
+
+@{
+    Layout = null;
+    string title = ViewBag.Title;
+    string caption = ViewBag.Caption;
+    string pNameError = ViewBag?.NameError;
+    PublisherModel publisher = ViewBag?.Publisher;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@title</title>
+    <link href="~/Content/Common/css/reset.css" rel="stylesheet" />
+    <link href="~/Content/Common/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="header">
+        <div class="central-part central-part--column central-part--justify-center">
+            <div class="header-menu">
+                @Html.ActionLink("Главная", "Index", "Home", null, new { @class = "header-menu__item" })
+                @Html.ActionLink("Издатели", "Index", "Publisher", null, new { @class = "header-menu__item" })
+                @Html.ActionLink("Авторы", "Index", "Author", null, new { @class = "header-menu__item" })
+                @Html.ActionLink("Книги", "Index", "Book", null, new { @class = "header-menu__item" })
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <form id="CreatePublisherForm" style="align-self:center;" method="post">
+            <div class="fields h-12">
+                <h2>@caption</h2>
+                @CreateForm.FormForPublisher(publisher, pNameError)
+                <button type="submit">@((publisher != null && publisher?.Id != null) ? "Редактировать" : "Создать")</button>
+            </div>
+        </form>
+    </main>
+    <footer class="footer"></footer>
+</body>
+</html>
