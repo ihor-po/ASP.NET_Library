@@ -68,3 +68,4 @@
 \\Mac\iCloud\Step\ASP.Net\DZ\Library\Library\obj\Debug\Library.csproj.CopyComplete
 \\Mac\iCloud\Step\ASP.Net\DZ\Library\Library\obj\Debug\Library.dll
 \\Mac\iCloud\Step\ASP.Net\DZ\Library\Library\obj\Debug\Library.pdb
+\\Mac\iCloud\Step\ASP.Net\DZ\Library\Library\obj\Debug\Library.csprojAssemblyReference.cache

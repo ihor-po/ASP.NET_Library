@@ -92,6 +92,11 @@ namespace Library.Controllers
             }
             else
             {
+                if (Convert.ToInt16(req["PageCount"]) == 0)
+                {
+                    ViewBag.PageCountError = "Колличество страниц должно быть больше 0!";
+                }
+
                 book.PageCount = Convert.ToInt16(req["PageCount"]);
             }
 
@@ -187,6 +192,10 @@ namespace Library.Controllers
             }
             else
             {
+                if (Convert.ToInt16(req["PageCount"]) == 0)
+                {
+                    ViewBag.PageCountError = "Колличество страниц должно быть больше 0!";
+                }
                 book.PageCount = Convert.ToInt16(req["PageCount"]);
             }
 
