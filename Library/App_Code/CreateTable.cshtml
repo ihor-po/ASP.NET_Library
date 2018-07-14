@@ -66,7 +66,7 @@
                         <td>@author.Id</td>
                         <td>@author.Name</td>
                         <td>@author.DateOfBirth.Date.ToString("d")</td>
-                        <td>@author.DateOfDeath.Date.ToString("d")</td>
+                        <td>@((author.DateOfDeath != DateTime.MinValue) ? author.DateOfDeath.Date.ToString("d") : "" )</td>
                         <td class="td-inline w-auto">
                             <a class="btn-edit" href="/Author/EditAuthor/@author.Id">Изменить</a>
                             <a class="btn-delete" href="/Author/DeleteAuthor/@author.Id">Удалить</a>

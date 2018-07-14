@@ -58,7 +58,7 @@
                    type="text" id="DateOfDeath"
                    name="DateOfDeath"
                    placeholder="ГГГГ-ММ-ДД"
-                   value="@((author != null) ? author.DateOfDeath.ToString("yyyyMMdd") : " ")">
+                   value="@((author != null && author.DateOfDeath != DateTime.MinValue) ? author.DateOfDeath.ToString("yyyyMMdd") : " ")">
             <script>
                 jQuery(function ($) {
                     $("#DateOfBirth").mask("9999-99-99", { placeholder: " " });

@@ -65,15 +65,18 @@ namespace Library.Controllers
                 return View("AuthorForm");
             }
 
-            try
+            if (req["DateOfDeath"] != "")
             {
-                atr.DateOfDeath = Convert.ToDateTime(req["DateOfDeath"]).Date;
-            }
-            catch (Exception)
-            {
-                ViewBag.DeathError = "Проверьте правльность введения даты";
-                ViewBag.Author = atr;
-                return View("AuthorForm");
+                try
+                {
+                    atr.DateOfDeath = Convert.ToDateTime(req["DateOfDeath"]).Date;
+                }
+                catch (Exception)
+                {
+                    ViewBag.DeathError = "Проверьте правльность введения даты";
+                    ViewBag.Author = atr;
+                    return View("AuthorForm");
+                }
             }
 
             atr.Id = (aRepo.GetAll().LastOrDefault()?.Id ?? 0) + 1;
