@@ -161,7 +161,7 @@ namespace Library.Controllers
                 ViewBag.PublisherError = "Издатель ны выбран!";
             }
 
-            if (book.Authors.Count() == 1)
+            if (book?.Authors?.Count() == 1 || book?.Authors == null)
             {
                 AuthorModel aModel = aRepo.GetAll().ToList().Find(_author => _author.Name == req["Authors"]);
 
@@ -176,6 +176,7 @@ namespace Library.Controllers
                     book.Authors = atrs;
                 }
             }
+
 
             try
             {
