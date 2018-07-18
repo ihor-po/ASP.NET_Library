@@ -179,6 +179,8 @@
     <Content Include="Views\Book\Index.cshtml" />
     <Content Include="Views\Book\BookForm.cshtml" />
     <Content Include="Views\Book\AddAuthor.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

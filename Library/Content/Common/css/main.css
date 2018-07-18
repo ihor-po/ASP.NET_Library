@@ -90,7 +90,7 @@ body {
 /* ===============  main  =============== */
 .main {
     width: 100%;
-    height: calc(100vh - 8rem);
+    min-height: calc(100vh - 8rem);
     display: -moz-flex;
     display: -webkit-flex;
     display: flex;
@@ -111,10 +111,10 @@ body {
 .main--justify-start {
     justify-content: flex-start !important;
 }
-.main--padding-top-2 {
+/*.main--padding-top-2 {
     padding-top: 2rem !important;
     height: calc(100vh - 10rem);
-}
+}*/
 
 /* =============== ====== =============== */
 /* ===============  Поля  =============== */
