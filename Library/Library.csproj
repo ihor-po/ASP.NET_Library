@@ -152,6 +152,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\TableHelper.cs" />
     <Compile Include="Models\AuthorModel.cs" />
     <Compile Include="Models\BookModel.cs" />
     <Compile Include="Models\Interfaces\IRepository.cs" />

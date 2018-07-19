@@ -1,44 +1,5 @@
 ﻿@using Library.Models;
 
-@helper HtmlPublisherTable(IEnumerable<PublisherModel> collection, Dictionary<string, string> lang, string caption)
-{
-    <table class="userTable">
-        <caption>
-            <h3>@caption</h3>
-            <div class="caption__add-button">
-                <a class="btn-create" href="/Publisher/CreatePublisher">Добавить издателя</a>
-            </div>
-        </caption>
-        <thead>
-            <tr>
-                @foreach (var propInfo in typeof(PublisherModel).GetProperties())
-                {
-                    <th @((propInfo.Name == "Id") ? "class=w-5" : "class=w-80")>@(lang.ContainsKey(propInfo.Name) ? lang[propInfo.Name] : propInfo.Name)</th>
-                }
-                <th class="w-auto">Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (collection?.Any() == true)
-            {
-                foreach (var publisher in collection)
-                {
-                    <tr>
-                        @foreach (var propInfo in typeof(PublisherModel).GetProperties())
-                        {
-                            <td>@propInfo.GetValue(publisher)</td>
-                        }
-                        <td class="td-inline w-auto">
-                            <a class="btn-edit" href="/Publisher/EditPublisher/@publisher.Id">Изменить</a>
-                            <a class="btn-delete" href="/Publisher/DeletePublisher/@publisher.Id">Удалить</a>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
-}
-
 @helper HtmlAuthorsTable(IEnumerable<AuthorModel> collection, Dictionary<string, string> lang, string caption)
 {
     <table class="userTable">

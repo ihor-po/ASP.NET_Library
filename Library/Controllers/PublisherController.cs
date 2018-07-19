@@ -23,7 +23,7 @@ namespace Library.Controllers
             ViewBag.Caption = "Издатели";
             ViewBag.Publishers = pRepo.GetAll();
 
-            return View();
+            return View(pRepo.GetAll());
         }
 
         // GET: Create publisher
@@ -113,7 +113,7 @@ namespace Library.Controllers
         {
             PublisherModel publisher = pRepo.GetOne(id);
 
-            BookModel book = bRepo.GetAll().ToList().Find(_book => _book.Publisher.Name == publisher.Name);
+            BookModel book = bRepo.GetAll().ToList().Find(_book => _book.Publisher?.Name == publisher.Name);
 
             if (book != null)
             {

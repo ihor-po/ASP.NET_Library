@@ -1,8 +1,10 @@
 ﻿@using Library.Models;
+@using Library.Helpers;
+@model IEnumerable<PublisherModel>
 @{
     string title = ViewBag.Title;
     string caption = ViewBag.Caption;
-    IEnumerable<PublisherModel> publisher = ViewBag.Publishers;
+    //IEnumerable<PublisherModel> publisher = ViewBag.Publishers;
 
     Dictionary<string, string> lang = new Dictionary<string, string>
     {
@@ -12,4 +14,7 @@
 }
 
 @* Использования хелпера *@
-@CreateTable.HtmlPublisherTable(publisher, lang, caption)
+@TableHelper.CreateTable(Html, caption, Model,
+    publisher => { return $"{Html.ActionLink("Изменить", "EditPublisher", new { id = publisher.Id }, new { @class = "btn-edit" })}" +
+        $"{Html.ActionLink("Удалить", "DeletePublisher", new { id = publisher.Id }, new { @class = "btn-delete" })}"; })
+
