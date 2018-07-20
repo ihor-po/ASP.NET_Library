@@ -4,17 +4,11 @@
 @{
     string title = ViewBag.Title;
     string caption = ViewBag.Caption;
-    //IEnumerable<PublisherModel> publisher = ViewBag.Publishers;
-
-    Dictionary<string, string> lang = new Dictionary<string, string>
-    {
-        {"Id", "ID" },
-        {"Name", "Издатель" }
-    };
+    string url = ViewBag.Url;
 }
 
 @* Использования хелпера *@
-@TableHelper.CreateTable(Html, caption, Model,
+@TableHelper.CreateTable(Html, caption, url, Model,
     publisher => { return $"{Html.ActionLink("Изменить", "EditPublisher", new { id = publisher.Id }, new { @class = "btn-edit" })}" +
         $"{Html.ActionLink("Удалить", "DeletePublisher", new { id = publisher.Id }, new { @class = "btn-delete" })}"; })
 

@@ -21,9 +21,9 @@ namespace Library.Controllers
         {
             ViewBag.Title = "Library :: Книги";
             ViewBag.Caption = "Книги";
-            ViewBag.Books = bRepo.GetAll();
+            ViewBag.Url = "/Book/CreateBook";
 
-            return View();
+            return View(bRepo.GetAll());
         }
 
         // GET: Create book

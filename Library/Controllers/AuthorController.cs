@@ -20,9 +20,9 @@ namespace Library.Controllers
         {
             ViewBag.Title = "Library :: Авторы";
             ViewBag.Caption = "Авторы";
-            ViewBag.Authors = aRepo.GetAll();
+            ViewBag.Url = "/Author/CreateAuthor";
 
-            return View();
+            return View(aRepo.GetAll());
         }
 
         // GET: Create author

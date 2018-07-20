@@ -9,7 +9,7 @@ namespace Library.Helpers
 {
     public static class TableHelper
     {
-        public static MvcHtmlString CreateTable<T>(this HtmlHelper helper, string title,  IEnumerable<T> collection, Func<T, string> additionalField = null)
+        public static MvcHtmlString CreateTable<T>(this HtmlHelper helper, string title, string url,  IEnumerable<T> collection, Func<T, string> additionalField = null)
         {
             TagBuilder table = new TagBuilder("table");     //Создание таблицы
             table.AddCssClass("userTable");                 //Добавления класа таблицы
@@ -20,6 +20,15 @@ namespace Library.Helpers
             h.InnerHtml = title;                            //Добавление текста заголовка
 
             caption.InnerHtml = h.ToString();               //Добавление в заголовок текст заголовка
+
+            TagBuilder createButton = new TagBuilder("a");  //Ссоздание кнопки Создать
+            createButton.GenerateId("CreateButton");        //Создание id ссылки
+            createButton.MergeAttribute("href", url);       //Создание атрибута href
+            createButton.AddCssClass("btn-create");         //Добавление ссылке класс
+            createButton.InnerHtml = "Создать";             //Добавление текста ссылки
+
+            caption.InnerHtml += createButton.ToString();               //Добавление в заголовок текст заголовка
+
             table.InnerHtml += caption.ToString();          //Добавление в талицу заголовка
 
             TagBuilder trHead = new TagBuilder("tr");       //Создание строки заголовков столбцов таблицы
@@ -63,10 +72,34 @@ namespace Library.Helpers
                     foreach (var propInfo in typeof(T).GetProperties())
                     {
                         //Создаем столбец в текущей строке элемента коллекции
-                        TagBuilder tdBody = new TagBuilder("td")
+                        TagBuilder tdBody = new TagBuilder("td");
+
+                        if (propInfo.GetValue(item) is PublisherModel)
                         {
-                            InnerHtml = propInfo.GetValue(item).ToString()
-                        };
+                            tdBody.InnerHtml = (propInfo.GetValue(item) as PublisherModel).Name?.ToString();
+                        }
+                        else if (propInfo.GetValue(item) is IEnumerable<AuthorModel>)
+                        {
+                            IEnumerable<AuthorModel> coll = (propInfo.GetValue(item) as IEnumerable<AuthorModel>);
+                            if (coll?.Any() == true)
+                            {
+                                foreach (var author in coll)
+                                {
+                                    TagBuilder p = new TagBuilder("p");
+                                    p.InnerHtml = author.Name;
+
+                                    tdBody.InnerHtml += p.ToString();
+                                }
+                            }
+                        }
+                        else if (propInfo.GetValue(item) is DateTime)
+                        {
+                            tdBody.InnerHtml = Convert.ToDateTime(propInfo.GetValue(item)).Date.ToString("d");
+                        }
+                        else
+                        {
+                            tdBody.InnerHtml = propInfo.GetValue(item)?.ToString();
+                        }
 
                         trTBody.InnerHtml += tdBody.ToString();     //Добавляем в строку созданный столбец
                     }

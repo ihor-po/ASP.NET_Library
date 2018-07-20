@@ -1,17 +1,15 @@
 ﻿@using Library.Models;
+@using Library.Helpers;
+@model IEnumerable<AuthorModel>
+
 @{
     string title = ViewBag.Title;
     string caption = ViewBag.Caption;
-    IEnumerable<AuthorModel> authors = ViewBag.Authors;
-
-    Dictionary<string, string> lang = new Dictionary<string, string>
-    {
-        {"Id", "ID" },
-        {"Name", "Издатель" },
-        {"DateOfBirth", "Дата рождения" },
-        {"DateOfDeath", "Дата смерти" }
-    };
+    string url = ViewBag.Url;
 }
 
 @* Использования хелпера *@
-@CreateTable.HtmlAuthorsTable(authors, lang, caption)
+@TableHelper.CreateTable(Html, caption, url, Model,
+    author => {
+        return $"{Html.ActionLink("Изменить", "EditAuthor", new { id = author.Id }, new { @class = "btn-edit" })}" +
+        $"{Html.ActionLink("Удалить", "DeleteAuthor", new { id = author.Id }, new { @class = "btn-delete" })}"; })

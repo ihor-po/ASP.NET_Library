@@ -21,7 +21,7 @@ namespace Library.Controllers
         {
             ViewBag.Title = "Library :: Издатели";
             ViewBag.Caption = "Издатели";
-            ViewBag.Publishers = pRepo.GetAll();
+            ViewBag.Url = "/Publisher/CreatePublisher";
 
             return View(pRepo.GetAll());
         }
