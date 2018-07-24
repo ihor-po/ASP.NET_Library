@@ -280,11 +280,8 @@ body {
     padding: 0.8rem;
     color: #212849;
 }
-.userTable td:first-child, .userTable td:last-child {
+.userTable td:last-child {
     text-align: center;
-}
-.userTable th:first-child {
-    width: 3%;
 }
 .userTable th:last-child {
     width: 12%;

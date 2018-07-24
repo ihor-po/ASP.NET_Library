@@ -15,6 +15,7 @@ namespace Library.Models
         /// Publisher ID
         /// </summary>
         [Display(Name = "ID")]
+        [ScaffoldColumn(false)]
         public int Id { get => id; set => id = value; }
 
 
@@ -22,6 +23,7 @@ namespace Library.Models
         /// Piblisher Name
         /// </summary>
         [Display(Name = "Издатель")]
+        [ScaffoldColumn(true)]
         public string Name { get => name; set => name = value; }
     }
 }

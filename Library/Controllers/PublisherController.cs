@@ -32,8 +32,9 @@ namespace Library.Controllers
         {
             ViewBag.Title = "Library :: Издатели";
             ViewBag.Caption = "Создать издателя";
+            PublisherModel newPublisher = new PublisherModel();
 
-            return View("PublisherForm");
+            return View("PublisherForm", newPublisher);
         }
 
         //POST: Create publisher

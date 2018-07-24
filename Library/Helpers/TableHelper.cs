@@ -36,19 +36,30 @@ namespace Library.Helpers
             //Проходимся по всем свойствам модели и добавляем их в заголовоки столбцов
             foreach (var propInfo in typeof(T).GetProperties())
             {
+                bool isVisible = true;
+
                 //Получение Display(Name="sometext") из модели
                 var type = typeof(T);
                 var memInfo = type.GetMember(propInfo.Name); // your member
                 var attributes = memInfo[0].GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.DisplayAttribute), false);
+                var attrScaffoldColumn = memInfo[0].GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute), false);
                 var displayname = ((System.ComponentModel.DataAnnotations.DisplayAttribute)attributes[0]).Name;
 
-                //Создание столбцов заголовков таблицы
-                TagBuilder th = new TagBuilder("th")
+                if (attrScaffoldColumn.Count() > 0)
                 {
-                    InnerHtml = displayname
-                };
+                    isVisible = Convert.ToBoolean(((System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute)attrScaffoldColumn[0])?.Scaffold);
+                }
 
-                trHead.InnerHtml += th.ToString();          //Добавление в строку заголовков таблицы
+                if (isVisible == true)
+                {
+                    //Создание столбцов заголовков таблицы
+                    TagBuilder th = new TagBuilder("th")
+                    {
+                        InnerHtml = displayname
+                    };
+                    trHead.InnerHtml += th.ToString();          //Добавление в строку заголовков таблицы
+                }
+                
             }
 
             //Если дополнительное поле передано то создаем дополнитеьлный столбез для действий
@@ -66,6 +77,7 @@ namespace Library.Helpers
             {
                 foreach (var item in collection)
                 {
+
                     TagBuilder trTBody = new TagBuilder("tr");      //Создаем строку в теле таблицы
 
                     //Проходим по свойствам элемента коллекции
@@ -101,7 +113,22 @@ namespace Library.Helpers
                             tdBody.InnerHtml = propInfo.GetValue(item)?.ToString();
                         }
 
-                        trTBody.InnerHtml += tdBody.ToString();     //Добавляем в строку созданный столбец
+                        bool isVisible = true;
+
+                        var type = typeof(T);
+                        var memInfo = type.GetMember(propInfo.Name); // your member
+                        var attrScaffoldColumn = memInfo[0].GetCustomAttributes(typeof(System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute), false);
+
+                        if (attrScaffoldColumn.Count() > 0)
+                        {
+                            isVisible = Convert.ToBoolean(((System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute)attrScaffoldColumn[0])?.Scaffold);
+                        }
+                        
+
+                        if (isVisible == true)
+                        {
+                            trTBody.InnerHtml += tdBody.ToString();     //Добавляем в строку созданный столбец
+                        }
                     }
 
                     //Если дополнительное поле не пустое, то добавляем данные в дополнительный столбец
