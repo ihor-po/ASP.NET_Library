@@ -16,10 +16,12 @@
         <header class="header">
             <div class="central-part central-part--column central-part--justify-center">
                 <div class="header-menu">
-                    @Html.ActionLink("Главная", "Index", "Home", null, new { @class = "header-menu__item" })
+                    @Html.ActionLink("Главная", "Index", "Home", null, new { @class = "header-menu__item w-10" })
                     @Html.ActionLink("Издатели", "Index", "Publisher", null, new { @class = "header-menu__item" })
                     @Html.ActionLink("Авторы", "Index", "Author", null, new { @class = "header-menu__item" })
                     @Html.ActionLink("Книги", "Index", "Book", null, new { @class = "header-menu__item" })
+                    @Html.ActionLink("Роли", "Index", "Book", null, new { @class = "header-menu__item" })
+                    @Html.ActionLink("Пользователи", "Index", "Book", null, new { @class = "header-menu__item" })
                 </div>
             </div>
         </header>

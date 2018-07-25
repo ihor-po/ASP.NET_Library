@@ -5,19 +5,15 @@
 @{
     string title = ViewBag.Title;
     string caption = ViewBag.Caption;
-    //string pNameError = ViewBag?.NameError;
-    //PublisherModel publisher = ViewBag?.Publisher;
 }
 
 
 <form id="CreatePublisherForm" style="align-self:center;" method="post">
     <div class="fields h-16">
         <h2>@caption</h2>
-        @*@CreateForm.FormForPublisher(publisher, pNameError)*@
         
         @Html.EditorForModel()
 
-        @*<button type="submit">@((publisher != null && publisher?.Id != null) ? "Редактировать" : "Создать")</button>*@
-        <button type="submit">Создать</button>
+        <button type="submit">@((caption == "Создать издателя") ? "Создать" : "Редактировать")</button>
     </div>
 </form>

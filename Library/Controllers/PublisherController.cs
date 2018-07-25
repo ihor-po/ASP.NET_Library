@@ -82,6 +82,14 @@ namespace Library.Controllers
             {
                 pRepo.GetOne(id).Name = publisher.Name;
 
+                BookModel book = bRepo.GetAll().ToList().Find(_book => _book.Publisher?.Name == publisher.Name);
+
+                while (book != null)
+                {
+                    book.Publisher.Name = publisher.Name;
+                    book = bRepo.GetAll().ToList().Find(_book => _book.Publisher?.Name == publisher.Name);
+                }
+
                 return RedirectToAction("EditPublisher", new { id = publisher.Id });
             }
             else

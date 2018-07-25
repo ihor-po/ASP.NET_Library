@@ -69,7 +69,7 @@ body {
 }
 
 .header-menu__item {
-    width: 25%;
+    width: 18%;
     height: 100%;
     display: block;
     text-align: center;
@@ -360,6 +360,9 @@ body {
 /* =============== ====== =============== */
 .w-5 {
     width: 5% !important;
+}
+.w-10 {
+    width: 10% !important;
 }
 .w-20 {
     width: 20% !important;
