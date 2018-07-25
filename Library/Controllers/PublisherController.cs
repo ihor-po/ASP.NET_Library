@@ -39,33 +39,24 @@ namespace Library.Controllers
 
         //POST: Create publisher
         [HttpPost]
-        public ActionResult CreatePublisher(string Name)
+        public ActionResult CreatePublisher(PublisherModel publisher)
         {
-            PublisherModel publisher = null;
-
             ViewBag.Title = "Library :: Издатели";
             ViewBag.Caption = "Создать издателя";
             
-
-            publisher = new PublisherModel();
-
-            string text = @"^[a-zA-Zа-яА-ЯіІїЇ' \-]{2,25}$";
-            publisher.Name = Name;
-
-
-            if (!Regex.Match(publisher.Name, text).Success)
+            if (ModelState.IsValid)
             {
-                ViewBag.NameError = "Не менее 2 символов; Цифры не допустимы.";
-                ViewBag.Publisher = publisher;
+                publisher.Id = (pRepo.GetAll().LastOrDefault()?.Id ?? 0) + 1;
 
-                return View("PublisherForm");
+                pRepo.Add(publisher);
+
+                return RedirectToAction("EditPublisher", new { id = publisher.Id });
             }
-        
-            publisher.Id = (pRepo.GetAll().LastOrDefault()?.Id ?? 0) + 1;
+            else
+            {
+                return View("PublisherForm", publisher);
+            }
 
-            pRepo.Add(publisher);
-
-            return RedirectToAction("EditPublisher", new { id = publisher.Id});
         }
 
         //GET: Edit Publisher
@@ -74,39 +65,32 @@ namespace Library.Controllers
         {
             ViewBag.Title = "MVC CRUD :: Редакирование издателя";
             ViewBag.Caption = "Редактирование издателя";
-            ViewBag.Publisher = pRepo.GetOne(id);
 
-            return View("PublisherForm");
+            return View("PublisherForm", pRepo.GetOne(id));
         }
 
         //GET: Edit Publisher
         [HttpPost]
-        public ActionResult EditPublisher(int id, string Name)
+        public ActionResult EditPublisher(int id, PublisherModel publisher)
         {
-            PublisherModel publisher = pRepo.GetOne(id);
+            //PublisherModel publisher = pRepo.GetOne(id);
 
             ViewBag.Title = "MVC CRUD :: Редакирование роли";
             ViewBag.Caption = "Редактирование издателя";
-            ViewBag.Publisher = publisher;
 
-            string text = @"^[a-zA-Zа-яА-ЯіІїЇ' \-]{2,25}$";
+            if (ModelState.IsValid)
+            {
+                pRepo.GetOne(id).Name = publisher.Name;
 
-            if (!Regex.Match(Name, text).Success)
+                return RedirectToAction("EditPublisher", new { id = publisher.Id });
+            }
+            else
             {
                 ViewBag.NameError = "Не менее 2 символов; Цифры не допустимы.";
-                return View("PublisherForm");
+                ViewBag.Publisher = publisher;
+
+                return View("PublisherForm", publisher);
             }
-
-            BookModel book = bRepo.GetAll().ToList().Find(_book => _book.Publisher?.Name == publisher.Name);
-
-            if (book != null)
-            {
-                book.Publisher.Name = Name;
-            }
-
-            publisher.Name = Name;
-
-            return RedirectToAction("EditPublisher", new { id = publisher.Id });
         }
 
         //GET: Delete Publisher
@@ -116,9 +100,10 @@ namespace Library.Controllers
 
             BookModel book = bRepo.GetAll().ToList().Find(_book => _book.Publisher?.Name == publisher.Name);
 
-            if (book != null)
+            while (book != null)
             {
                 book.Publisher = null;
+                book = bRepo.GetAll().ToList().Find(_book => _book.Publisher?.Name == publisher.Name);
             }
 
             pRepo.Delete(id);

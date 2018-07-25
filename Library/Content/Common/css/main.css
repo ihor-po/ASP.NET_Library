@@ -133,6 +133,7 @@ body {
     justify-content: space-around;
     align-self: center;
     padding: 1rem 0.625rem;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 .fields__item {
     width: 100%;
@@ -159,15 +160,16 @@ body {
     margin-bottom: 0.1rem;
 }
 .fields__item input[type=text], .fields__item select, .fields__item input[type=password],
-.fields__item input[type=number], .fields__item textarea{
+.fields__item input[type=number], .fields__item textarea, .editor-field input[type=text]{
     width: 95%;
     line-height: 1.5rem;
     font-size: 1.2rem;
     color: #5e5d5d;
     padding: 0 0.3rem;
     font-family: Montserrat, sans-serif;
+    margin-bottom: 0.5rem;
 }
-.error {
+.error, .input-validation-error {
     font-family: Montserrat-Light, sans-serif;
     font-size: 0.75rem;
     background-color: rgba(255,0,0,0.3);
@@ -180,8 +182,9 @@ body {
     width: 100%;
     padding: 0.2rem 0.3rem;
 }
-.fields__item label {
+.fields__item label, .editor-label {
     font-family: Montserrat-Bold, sans-serif;
+    margin-bottom: 0.5rem;
 }
 .fields button {
     width: 58%;
@@ -191,7 +194,7 @@ body {
     color: #dbdbdb;
     background-color: #434697;
     align-self: center;
-    margin-left: 4rem;
+   padding: 0;
 }
 .fields button:hover {
     color: #FFFFFF;
@@ -207,7 +210,7 @@ body {
     margin-bottom: 1.3rem;
     font-family: Montserrat-Bold, sans-serif;
 }
-.text-error {
+.text-error, .field-validation-error {
     width: 100%;
     color: #a10000;
     font-weight: 600;
@@ -215,8 +218,8 @@ body {
     font-family: Montserrat-Light, sans-serif;
     font-size: 0.75rem;
 }
-.h-12 {
-    height: 12rem !important;
+.h-16 {
+    height: 16rem !important;
 }
 
 .h-20 {

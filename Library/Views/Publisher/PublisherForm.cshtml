@@ -11,10 +11,10 @@
 
 
 <form id="CreatePublisherForm" style="align-self:center;" method="post">
-    <div class="fields h-12">
+    <div class="fields h-16">
         <h2>@caption</h2>
         @*@CreateForm.FormForPublisher(publisher, pNameError)*@
-
+        
         @Html.EditorForModel()
 
         @*<button type="submit">@((publisher != null && publisher?.Id != null) ? "Редактировать" : "Создать")</button>*@

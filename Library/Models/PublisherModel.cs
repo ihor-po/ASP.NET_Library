@@ -24,6 +24,10 @@ namespace Library.Models
         /// </summary>
         [Display(Name = "Издатель")]
         [ScaffoldColumn(true)]
+        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "Введите Издателя")]
+        [StringLength(25, MinimumLength = 2, ErrorMessage = "Длина строки должна быть от 2 до 25 символов")]
+        [RegularExpression(@"^[a-zA-Zа-яА-ЯіІїЇ' \-]{2,25}$", ErrorMessage = "Некоректное название издателя")]
         public string Name { get => name; set => name = value; }
     }
 }
