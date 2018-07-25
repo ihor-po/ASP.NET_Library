@@ -1,17 +1,23 @@
 ﻿@using Library.Models;
+
+@model Library.Models.AuthorModel
+
 @{
     string title = ViewBag.Title;
     string caption = ViewBag.Caption;
-    string NameError = ViewBag?.NameError;
-    string BirthDayError = ViewBag?.BirthDayError;
-    string DeathError = ViewBag?.DeathError;
-    AuthorModel author = ViewBag?.Author;
+    //string NameError = ViewBag?.NameError;
+    //string BirthDayError = ViewBag?.BirthDayError;
+    //string DeathError = ViewBag?.DeathError;
+    //AuthorModel author = ViewBag?.Author;
 }
 
 <form id="CreateAuthorForm" style="align-self:center;" method="post">
 <div class="fields author-fields">
     <h2>@caption</h2>
-    @CreateForm.FormForAuthor(author, NameError, BirthDayError, DeathError)
-    <button type="submit">@((author != null && author?.Id != null) ? "Редактировать" : "Создать")</button>
+    @*@CreateForm.FormForAuthor(author, NameError, BirthDayError, DeathError)*@
+
+    @Html.EditorForModel()
+
+    <button type="submit">@((caption == "Создать автора") ? "Создать" : "Редактировать")</button>
 </div>
 </form>

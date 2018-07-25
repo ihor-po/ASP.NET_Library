@@ -73,8 +73,6 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult EditPublisher(int id, PublisherModel publisher)
         {
-            //PublisherModel publisher = pRepo.GetOne(id);
-
             ViewBag.Title = "MVC CRUD :: Редакирование роли";
             ViewBag.Caption = "Редактирование издателя";
 

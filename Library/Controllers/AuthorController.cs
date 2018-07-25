@@ -29,61 +29,32 @@ namespace Library.Controllers
         [HttpGet]
         public ViewResult CreateAuthor()
         {
-            ViewBag.Title = "Library :: Издатели";
-            ViewBag.Caption = "Создать издателя";
+            ViewBag.Title = "Library :: Авторы";
+            ViewBag.Caption = "Создать автора";
+            AuthorModel author = new AuthorModel();
 
-            return View("AuthorForm");
+            return View("AuthorForm", author);
         }
 
         //POST: Create author
         [HttpPost]
-        public ActionResult CreateAuthor(FormCollection req)
+        public ActionResult CreateAuthor(AuthorModel atr)
         {
-            ViewBag.Title = "Library :: Издатели";
-            ViewBag.Caption = "Создать издателя";
-            
-            AuthorModel atr = new AuthorModel();
+            ViewBag.Title = "Library :: Авторы";
+            ViewBag.Caption = "Создать автора";
 
-            string text = @"^[a-zA-Zа-яА-ЯіІїЇ' \-]{2,25}$";
-            atr.Name = req["Name"];
-
-            if (!Regex.Match(atr.Name, text).Success)
+            if (ModelState.IsValid)
             {
-                ViewBag.NameError = "Не менее 2 символов; Цифры не допустимы.";
-                ViewBag.Author = atr;
-                return View("AuthorForm");
-            }
+                atr.Id = (aRepo.GetAll().LastOrDefault()?.Id ?? 0) + 1;
 
-            try
+                aRepo.Add(atr);
+
+                return RedirectToAction("EditAuthor", new { id = atr.Id });
+            }
+            else
             {
-                atr.DateOfBirth = Convert.ToDateTime(req["DateOfBirth"]).Date;
-            }
-            catch (Exception)
-            {
-                ViewBag.BirthDayError = "Проверьте правльность введения даты";
-                ViewBag.Author = atr;
-                return View("AuthorForm");
-            }
-
-            if (req["DateOfDeath"] != "")
-            {
-                try
-                {
-                    atr.DateOfDeath = Convert.ToDateTime(req["DateOfDeath"]).Date;
-                }
-                catch (Exception)
-                {
-                    ViewBag.DeathError = "Проверьте правльность введения даты";
-                    ViewBag.Author = atr;
-                    return View("AuthorForm");
-                }
-            }
-
-            atr.Id = (aRepo.GetAll().LastOrDefault()?.Id ?? 0) + 1;
-
-            aRepo.Add(atr);
-
-            return RedirectToAction("EditAuthor", new { id = atr.Id });
+                return View("AuthorForm", atr);
+            }      
         }
 
         //GET: Edit author
@@ -92,66 +63,42 @@ namespace Library.Controllers
         {
             ViewBag.Title = "MVC CRUD :: Редакирование автора";
             ViewBag.Caption = "Редактирование автора";
-            ViewBag.Author = aRepo.GetOne(id);
 
-            return View("AuthorForm");
+            return View("AuthorForm", aRepo.GetOne(id));
         }
 
         //GET: Edit author
         [HttpPost]
-        public ActionResult EditAuthor(int id, FormCollection req)
+        public ActionResult EditAuthor(int id, AuthorModel atr)
         {
-            AuthorModel atr = aRepo.GetOne(id);
-
             ViewBag.Title = "MVC CRUD :: Редакирование автора";
             ViewBag.Caption = "Редактирование издателя";
 
-            string text = @"^[a-zA-Zа-яА-ЯіІїЇ' \-]{2,25}$";
-
-            string oldName = atr.Name;
-
-            atr.Name = req["Name"];
-
-            if (!Regex.Match(atr.Name, text).Success)
+            if (ModelState.IsValid)
             {
-                ViewBag.NameError = "Не менее 2 символов; Цифры не допустимы.";
-                ViewBag.Author = atr;
-                return View("AuthorForm");
-            }
+                AuthorModel author = aRepo.GetOne(id);
 
-            try
-            {
-                atr.DateOfBirth = Convert.ToDateTime(req["DateOfBirth"]).Date;
-            }
-            catch (Exception)
-            {
-                ViewBag.BirthDayError = "Проверьте правльность введения даты";
-                ViewBag.Author = atr;
-                return View("AuthorForm");
-            }
-
-            try
-            {
-                atr.DateOfDeath = Convert.ToDateTime(req["DateOfDeath"]).Date;
-            }
-            catch (Exception)
-            {
-                ViewBag.DeathError = "Проверьте правльность введения даты";
-                ViewBag.Author = atr;
-                return View("AuthorForm");
-            }
-
-            foreach (BookModel book in bRepo.GetAll())
-            {
-                AuthorModel oldAuthor = book?.Authors?.ToList().Find(_atr => _atr.Name == oldName);
-                if (oldAuthor != null)
+                foreach (BookModel book in bRepo.GetAll())
                 {
-                    oldAuthor = atr;
+                    AuthorModel oldAuthor = book?.Authors?.ToList().Find(_atr => _atr.Name == author.Name);
+                    if (oldAuthor != null)
+                    {
+                        oldAuthor.Name = atr.Name;
+                        oldAuthor.DateOfBirth = atr.DateOfBirth;
+                        oldAuthor.DateOfDeath = atr.DateOfDeath;
+                    }
                 }
-                
-            }
 
-            return RedirectToAction("EditAuthor", new { id = atr.Id });
+                author.Name = atr.Name;
+                author.DateOfBirth = atr.DateOfBirth;
+                author.DateOfDeath = atr.DateOfDeath;
+
+                return RedirectToAction("EditAuthor", new { id = atr.Id });
+            }
+            else
+            {
+                return View("AuthorForm", atr);
+            }
         }
 
         //GET: Delete author

@@ -160,7 +160,8 @@ body {
     margin-bottom: 0.1rem;
 }
 .fields__item input[type=text], .fields__item select, .fields__item input[type=password],
-.fields__item input[type=number], .fields__item textarea, .editor-field input[type=text]{
+.fields__item input[type=number], .fields__item textarea, .editor-field input[type=text],
+.editor-field input[type=date]{
     width: 95%;
     line-height: 1.5rem;
     font-size: 1.2rem;
@@ -243,7 +244,7 @@ body {
 }
 .author-fields {
     width: 30rem !important;
-    height: 23rem !important;
+    height: 28rem !important;
 }
 .book-fields {
     width: 36rem !important;
