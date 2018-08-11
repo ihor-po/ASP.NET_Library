@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="Helpers\TableHelper.cs" />
     <Compile Include="Models\Repositories\RolesRepo.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Models\AuthorModel.cs" />
     <Compile Include="Models\BookModel.cs" />
