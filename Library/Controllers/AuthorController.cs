@@ -61,7 +61,7 @@ namespace Library.Controllers
         [HttpGet]
         public ViewResult EditAuthor(int id)
         {
-            ViewBag.Title = "MVC CRUD :: Редакирование автора";
+            ViewBag.Title = "Library :: Редакирование автора";
             ViewBag.Caption = "Редактирование автора";
 
             return View("AuthorForm", aRepo.GetOne(id));
@@ -71,7 +71,7 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult EditAuthor(int id, AuthorModel atr)
         {
-            ViewBag.Title = "MVC CRUD :: Редакирование автора";
+            ViewBag.Title = "Library :: Редакирование автора";
             ViewBag.Caption = "Редактирование издателя";
 
             if (ModelState.IsValid)

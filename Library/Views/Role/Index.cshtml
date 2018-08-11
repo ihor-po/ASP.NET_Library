@@ -1,0 +1,14 @@
+﻿@using Library.Models;
+@using Library.Helpers;
+@model IEnumerable<RoleModel>
+@{
+    string title = ViewBag.Title;
+    string caption = ViewBag.Caption;
+    string url = ViewBag.Url;
+}
+
+@* Использования хелпера *@
+@TableHelper.CreateTable(Html, caption, url, Model,
+    role => { return $"{Html.ActionLink("Изменить", "EditPublisher", new { id = role.Id }, new { @class = "btn-edit" })}" +
+        $"{Html.ActionLink("Удалить", "DeleteRole", new { id = role.Id }, new { @class = "btn-delete" })}"; })
+

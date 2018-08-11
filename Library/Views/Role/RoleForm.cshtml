@@ -1,0 +1,19 @@
+﻿@using Library.Models;
+
+@model Library.Models.RoleModel
+
+@{
+    string title = ViewBag.Title;
+    string caption = ViewBag.Caption;
+}
+
+
+<form id="CreateRoleForm" style="align-self:center;" method="post">
+    <div class="fields h-16">
+        <h2>@caption</h2>
+        
+        @Html.EditorForModel()
+
+        <button type="submit">@((caption == "Создать роль") ? "Создать" : "Редактировать")</button>
+    </div>
+</form>

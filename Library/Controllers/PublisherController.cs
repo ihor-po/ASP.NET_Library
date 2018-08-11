@@ -63,7 +63,7 @@ namespace Library.Controllers
         [HttpGet]
         public ViewResult EditPublisher(int id)
         {
-            ViewBag.Title = "MVC CRUD :: Редакирование издателя";
+            ViewBag.Title = "Library :: Редакирование издателя";
             ViewBag.Caption = "Редактирование издателя";
 
             return View("PublisherForm", pRepo.GetOne(id));
@@ -73,7 +73,7 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult EditPublisher(int id, PublisherModel publisher)
         {
-            ViewBag.Title = "MVC CRUD :: Редакирование роли";
+            ViewBag.Title = "Library :: Редакирование роли";
             ViewBag.Caption = "Редактирование издателя";
 
             if (ModelState.IsValid)
